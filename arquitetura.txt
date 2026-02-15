@@ -1,0 +1,46 @@
+backend/
+├── src/main/java/com/plataforma/
+│
+│   ├── controller/        # Entrada da API (HTTP)
+│   │   ├── AuthController.java
+│   │   ├── AlunoController.java
+│   │   ├── InstrutorController.java
+│   │   ├── AulaController.java
+│   │   └── PagamentoController.java
+│
+│   ├── service/           # Regras de negócio
+│   │   ├── AuthService.java
+│   │   ├── AlunoService.java
+│   │   ├── InstrutorService.java
+│   │   ├── AulaService.java
+│   │   └── PagamentoService.java
+│
+│   ├── repository/        # Acesso ao banco
+│   │   ├── AlunoRepository.java
+│   │   ├── InstrutorRepository.java
+│   │   ├── AulaRepository.java
+│   │   └── PagamentoRepository.java
+│
+│   ├── model/             # Entidades (tabelas)
+│   │   ├── Aluno.java
+│   │   ├── Instrutor.java
+│   │   ├── Aula.java
+│   │   └── Pagamento.java
+│
+│   ├── dto/               # Dados de entrada/saída
+│   │   ├── LoginDTO.java
+│   │   ├── CadastroDTO.java
+│   │   └── AulaDTO.java
+│
+│   ├── security/          # Segurança
+│   │   ├── SecurityConfig.java
+│   │   ├── JwtFilter.java
+│   │   └── JwtService.java
+│
+│   ├── config/            # Configurações gerais
+│   │   └── CorsConfig.java
+│
+│   └── PlataformaApplication.java
+│
+└── src/main/resources/
+    └── application.yml 

@@ -1,0 +1,55 @@
+ALUNO
+id_aluno (PK)
+nome
+email (unique)
+senha_hash
+telefone
+data_cadastro
+ativo
+
+INSTRUTOR
+id_instrutor (PK)
+nome
+email (unique)
+senha_hash
+telefone
+bio
+preco_hora
+ativo
+data_cadastro
+
+AULA
+id_aula (PK)
+id_aluno (FK → ALUNO)
+id_instrutor (FK → INSTRUTOR)
+data_hora
+duracao
+status (PENDENTE, CONFIRMADA, CANCELADA, CONCLUIDA)
+valor_total
+PAGAMENTO
+id_pagamento (PK)
+id_aula (FK → AULA)
+gateway_id
+status (PENDENTE, PAGO, CANCELADO)
+valor_total
+valor_plataforma
+valor_instrutor
+metodo (PIX, CARTAO)
+data_criacao
+data_confirmacao
+
+AVALIACAO
+id_avaliacao (PK)
+id_aula (FK → AULA)
+nota
+comentario
+data_avaliacao
+Relacionamentos
+
+ALUNO 1:N AULA
+
+INSTRUTOR 1:N AULA
+
+AULA 1:1 PAGAMENTO
+
+AULA 1:1 AVALIACAO
