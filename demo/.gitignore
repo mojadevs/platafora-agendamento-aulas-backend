@@ -22,6 +22,7 @@ target/
 ### Configurações ###
 backend/demo/src/main/resources/application.properties
 application.properties
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/

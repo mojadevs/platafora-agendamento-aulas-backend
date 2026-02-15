@@ -1,6 +1,6 @@
 package com.api.demo.dto.instrutor;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 import java.time.LocalDate;
 
