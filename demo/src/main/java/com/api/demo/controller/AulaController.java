@@ -21,6 +21,18 @@ public class AulaController {
         this.aulaServices = aulaServices;
     }
 
+    //id do instrutor
+    @GetMapping("/status/instrutores/{id}")
+    public ResponseEntity<List<AulaResponseDTO>> findByInstrutorIdAndStatus(
+            @RequestBody AulaCreateDTO dto,
+            @PathVariable Long id
+    ){
+        String status = dto.getStatus();
+        List<AulaResponseDTO> aulaResponseDTOList = aulaServices.findByInstrutorIdAndStatus(id, status);
+        return ResponseEntity.ok(aulaResponseDTOList);
+    }
+
+
     @GetMapping("/")
     public ResponseEntity<List<AulaResponseDTO>> findAll(){
         List<AulaResponseDTO> aulaResponseDTOList = aulaServices.findAll();
