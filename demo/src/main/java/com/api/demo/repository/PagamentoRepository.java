@@ -1,6 +1,4 @@
 package com.api.demo.repository;
-
-import com.api.demo.model.Aluno;
 import com.api.demo.model.Pagamento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

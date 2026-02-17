@@ -59,45 +59,50 @@ public class PagamentoController {
         return ResponseEntity.ok(pagamentoResponseDTO);
     }
 
-    //id do instrutor
+    //O id é do instrutor, não do pagamento
     @PostMapping("/{id}")
     public ResponseEntity<PagamentoResponseDTO> save(
             @RequestBody PagamentoCreateDTO dto,
-            @PathVariable Long idInstrutor
+            @PathVariable Long id
     )throws Exception {
-        PagamentoResponseDTO pagamentoResponseDTO = pagamentoServices.save(dto);
-        InstrutorResponseDTO instrutorResponseDTO = instrutorServices.findById(idInstrutor);
-        String instructorAccountId = instrutorResponseDTO.getAccountId();
+        try{
+            PagamentoResponseDTO pagamentoResponseDTO = pagamentoServices.save(dto);
+            InstrutorResponseDTO instrutorResponseDTO = instrutorServices.findById(id);
+            String instructorAccountId = instrutorResponseDTO.getAccountId();
 
-        if (!pagamentoServices.activeAccount(instructorAccountId)) {
-            throw new RuntimeException("Conta ainda não está habilitada para receber pagamentos");
+            if (!pagamentoServices.activeAccount(instructorAccountId)) {
+                throw new RuntimeException("Conta ainda não está habilitada para receber pagamentos");
+            }
+
+            Double valorInstrutorDouble = pagamentoResponseDTO.getValorInstrutor();
+            Double valorPlataformaDouble = pagamentoResponseDTO.getValorPlataforma();
+
+
+            Integer valorInstrutor = (int) Math.round(valorInstrutorDouble * 100);
+            Integer valorPlataforma = (int) Math.round(valorPlataformaDouble * 100);
+
+            Map<String, Object> params = new HashMap<>();
+            params.put("amount", valorInstrutor);
+            params.put("currency", "brl");
+
+            params.put("application_fee_amount", valorPlataforma);
+
+            Map<String, Object> transferData = new HashMap<>();
+            transferData.put("destination", instructorAccountId);
+
+            params.put("transfer_data", transferData);
+            PaymentIntent paymentIntent = PaymentIntent.create(params);
+            String paymentIntentId = paymentIntent.getId();
+            pagamentoResponseDTO.setPaymentIntentId(paymentIntentId);
+            String clientSecret = paymentIntent.getClientSecret();
+            pagamentoResponseDTO.setClientSecret(clientSecret);
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoResponseDTO);
+        }catch (Exception e){
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
-
-        Double valorInstrutorDouble = pagamentoResponseDTO.getValorInstrutor();
-        Double valorPlataformaDouble = pagamentoResponseDTO.getValorPlataforma();
-
-
-        Integer valorInstrutor = (int) Math.round(valorInstrutorDouble * 100);
-        Integer valorPlataforma = (int) Math.round(valorPlataformaDouble * 100);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("amount", valorInstrutor);
-        params.put("currency", "brl");
-
-        params.put("application_fee_amount", valorPlataforma);
-
-        Map<String, Object> transferData = new HashMap<>();
-        transferData.put("destination", instructorAccountId);
-
-        params.put("transfer_data", transferData);
-
-        PaymentIntent paymentIntent = PaymentIntent.create(params);
-        String paymentIntentId = paymentIntent.getId();
-        pagamentoResponseDTO.setPaymentIntentId(paymentIntentId);
-        String clientSecret = paymentIntent.getClientSecret();
-        pagamentoResponseDTO.setClientSecret(clientSecret);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(pagamentoResponseDTO);
     }
 
     @PutMapping("/{id}")
@@ -109,33 +114,7 @@ public class PagamentoController {
         return ResponseEntity.ok(pagamentoResponseDTO);
     }
 
-    @PostMapping("/webhook")
-    public ResponseEntity<String> handleWebhook(HttpServletRequest request, @RequestHeader("Stripe-Signature") String sigHeader) throws IOException {
-        String payload = request.getReader()
-                .lines()
-                .reduce("", (accumulator, actual) -> accumulator + actual);
 
-        Event event;
-
-        try {
-            event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
-        } catch (SignatureVerificationException e) {
-            return ResponseEntity.status(400).body("Invalid signature");
-        }
-
-        // Evento confirmado como legítimo
-
-        if ("payment_intent.succeeded".equals(event.getType())) {
-
-            PaymentIntent intent = (PaymentIntent) event.getDataObjectDeserializer().getObject().get();
-            String paymentIntentId = intent.getId();
-            String status = "CONFIRMADO";
-
-           pagamentoServices.updateStatus(paymentIntentId, status);
-        }
-
-        return ResponseEntity.ok("");
-    }
 
 
     @DeleteMapping("/{id}")
