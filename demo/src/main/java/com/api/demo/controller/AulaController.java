@@ -32,6 +32,15 @@ public class AulaController {
         return ResponseEntity.ok(aulaResponseDTOList);
     }
 
+    @GetMapping("/status/alunos/{id}")
+    public ResponseEntity<List<AulaResponseDTO>> findByAlunoIdAndStatus(
+            @RequestBody AulaCreateDTO dto,
+            @PathVariable Long id
+    ){
+        String status = dto.getStatus();
+        List<AulaResponseDTO> aulaResponseDTOList = aulaServices.findByAlunoIdAndStatus(id, status);
+        return ResponseEntity.ok(aulaResponseDTOList);
+    }
 
     @GetMapping("/")
     public ResponseEntity<List<AulaResponseDTO>> findAll(){

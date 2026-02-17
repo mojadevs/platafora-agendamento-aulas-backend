@@ -53,6 +53,17 @@ public class AulaServices {
         return aulaResponseDTOList;
     }
 
+    public List<AulaResponseDTO> findByAlunoIdAndStatus(long id, String status){
+        List<Aula> aulaList = aulaRepository.findByAlunoIdAndStatus(id, status);
+        List<AulaResponseDTO> aulaResponseDTOList = new ArrayList<>();
+
+        for(Aula aula : aulaList){
+            aulaResponseDTOList.add(aulaMapper.toDto(aula));
+        }
+
+        return aulaResponseDTOList;
+    }
+
     public AulaResponseDTO findById(Long id){
         Aula aula = aulaRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Aula não encontrada");
