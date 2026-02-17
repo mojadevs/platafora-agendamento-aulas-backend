@@ -77,8 +77,6 @@ public class PagamentoServices {
     }
 
     public boolean activeAccount(String accountId) throws StripeException {
-
-        System.out.println(accountId);
         Account account = Account.retrieve(accountId);
         System.out.println(account.getChargesEnabled());
         System.out.println(account.getPayoutsEnabled());

@@ -9,15 +9,6 @@ public class InstrutorUpdateDTO {
     private Boolean ativo;
     private String municipio;
     private String estado;
-    private String statusStripe;
-
-    public String getStatusStripe() {
-        return statusStripe;
-    }
-
-    public void setStatusStripe(String statusStripe) {
-        this.statusStripe = statusStripe;
-    }
 
     public String getEstado() {
         return estado;

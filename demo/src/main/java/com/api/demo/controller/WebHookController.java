@@ -1,7 +1,10 @@
 package com.api.demo.controller;
 
+import com.api.demo.dto.instrutor.InstrutorCreateDTO;
+import com.api.demo.services.InstrutorServices;
 import com.api.demo.services.PagamentoServices;
 import com.stripe.exception.SignatureVerificationException;
+import com.stripe.model.Account;
 import com.stripe.model.Event;
 import com.stripe.model.PaymentIntent;
 import com.stripe.net.Webhook;
@@ -22,16 +25,21 @@ public class WebHookController {
     private String endpointSecret;
 
     private final PagamentoServices pagamentoServices;
+    private final InstrutorServices instrutorServices;
 
-    public WebHookController(PagamentoServices pagamentoServices){
+    public WebHookController(PagamentoServices pagamentoServices, InstrutorServices instrutorServices){
         this.pagamentoServices = pagamentoServices;
+        this.instrutorServices = instrutorServices;
     }
 
     @PostMapping("/webhook")
-    public ResponseEntity<String> handleWebhook(HttpServletRequest request, @RequestHeader("Stripe-Signature") String sigHeader) throws IOException {
+    public ResponseEntity<String> handleWebhook(
+            HttpServletRequest request,
+            @RequestHeader("Stripe-Signature") String sigHeader) throws IOException {
+
         String payload = request.getReader()
                 .lines()
-                .reduce("", (accumulator, actual) -> accumulator + actual);
+                .reduce("", (acc, line) -> acc + line);
 
         Event event;
 
@@ -41,17 +49,40 @@ public class WebHookController {
             return ResponseEntity.status(400).body("Invalid signature");
         }
 
-        // Evento confirmado como legítimo
-
         if ("payment_intent.succeeded".equals(event.getType())) {
 
-            PaymentIntent intent = (PaymentIntent) event.getDataObjectDeserializer().getObject().get();
-            String paymentIntentId = intent.getId();
-            String status = "CONFIRMADO";
+            PaymentIntent intent = (PaymentIntent) event
+                    .getDataObjectDeserializer()
+                    .getObject()
+                    .orElse(null);
 
-            pagamentoServices.updateStatus(paymentIntentId, status);
-        }else if("account.updated".equals(event.getType())){
+            if (intent != null) {
+                pagamentoServices.updateStatus(intent.getId(), "CONFIRMADO");
+            }
 
+        } else if ("account.updated".equals(event.getType())) {
+
+            Account account = (Account) event
+                    .getDataObjectDeserializer()
+                    .getObject()
+                    .orElse(null);
+
+            if (account != null &&
+                    account.getChargesEnabled() &&
+                    account.getDetailsSubmitted()) {
+
+                InstrutorCreateDTO dto = new InstrutorCreateDTO();
+
+                dto.setEmail(account.getEmail());
+                dto.setAccountId(account.getId());
+                dto.setNome(account.getMetadata().get("nome"));
+                dto.setSenha(account.getMetadata().get("senha"));
+                dto.setTelefone(account.getMetadata().get("telefone"));
+                dto.setPrecoHora(Double.parseDouble(account.getMetadata().get("precoHora")));
+                dto.setAtivo(Boolean.getBoolean(account.getMetadata().get("ativo")));
+
+                instrutorServices.save(dto);
+            }
         }
 
         return ResponseEntity.ok("");

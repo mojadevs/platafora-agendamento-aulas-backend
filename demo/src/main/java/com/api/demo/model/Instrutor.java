@@ -21,17 +21,6 @@ public class Instrutor {
     private Boolean ativo;
     @Column(name = "account_id")
     private String accountId;
-    @Column(name = "status_stripe")
-    private String statusStripe;
-
-
-    public String getStatusStripe() {
-        return statusStripe;
-    }
-
-    public void setStatusStripe(String statusStripe) {
-        this.statusStripe = statusStripe;
-    }
 
     public String getMunicipio() {
         return municipio;

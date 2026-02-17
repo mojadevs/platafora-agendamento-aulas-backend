@@ -12,15 +12,6 @@ public class InstrutorCreateDTO {
     private Double precoHora;
     private Boolean ativo;
     private String accountId;
-    private String statusStripe;
-
-    public String getStatusStripe() {
-        return statusStripe;
-    }
-
-    public void setStatusStripe(String statusStripe) {
-        this.statusStripe = statusStripe;
-    }
 
     public String getAccountId() {
         return accountId;
