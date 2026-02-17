@@ -10,7 +10,6 @@ import com.api.demo.repository.PagamentoRepository;
 import com.stripe.exception.StripeException;
 import com.stripe.model.Account;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,8 +77,9 @@ public class PagamentoServices {
     }
 
     public boolean activeAccount(String accountId) throws StripeException {
-
         Account account = Account.retrieve(accountId);
+        System.out.println(account.getChargesEnabled());
+        System.out.println(account.getPayoutsEnabled());
 
         return account.getChargesEnabled() && account.getPayoutsEnabled();
     }

@@ -22,7 +22,6 @@ public class Instrutor {
     @Column(name = "account_id")
     private String accountId;
 
-
     public String getMunicipio() {
         return municipio;
     }

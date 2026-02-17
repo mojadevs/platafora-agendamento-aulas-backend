@@ -49,18 +49,19 @@ public class InstrutorController {
             @RequestBody InstrutorCreateDTO dto
     ) {
         try {
+
             AccountCreateParams accountParams = AccountCreateParams.builder()
                     .setType(AccountCreateParams.Type.EXPRESS)
                     .setCountry("BR")
                     .setEmail(dto.getEmail())
+                    .putMetadata("nome", dto.getNome())
+                    .putMetadata("senha", dto.getSenha())
+                    .putMetadata("telefone", dto.getTelefone())
+                    .putMetadata("precoHora", String.valueOf(dto.getPrecoHora()))
+                    .putMetadata("ativo", String.valueOf(dto.getAtivo()))
                     .build();
 
             Account account = Account.create(accountParams);
-
-            dto.setAccountId(account.getId());
-
-            InstrutorResponseDTO response = instrutorServices.save(dto);
-
 
             AccountLinkCreateParams linkParams =
                     AccountLinkCreateParams.builder()
@@ -73,19 +74,17 @@ public class InstrutorController {
             AccountLink accountLink = AccountLink.create(linkParams);
 
             Map<String, Object> result = new HashMap<>();
-            result.put("instrutor", response);
+            result.put("accountId", account.getId());
             result.put("onboardingUrl", accountLink.getUrl());
 
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
 
         } catch (StripeException e) {
             e.printStackTrace();
-            Map<String, Object> error = new HashMap<>();
-            error.put("message", e.getMessage());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(Map.of("message", e.getMessage()));
         }
     }
-
     @PutMapping("/{id}")
     public ResponseEntity<InstrutorResponseDTO> update(
             @PathVariable Long id,
