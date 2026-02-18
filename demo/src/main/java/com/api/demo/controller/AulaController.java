@@ -32,7 +32,7 @@ public class AulaController {
         return ResponseEntity.ok(aulaResponseDTOList);
     }
 
-    @GetMapping("/status/alunos/{id}")
+    @PostMapping("/status/alunos/{id}")
     public ResponseEntity<List<AulaResponseDTO>> findByAlunoIdAndStatus(
             @RequestBody AulaCreateDTO dto,
             @PathVariable Long id

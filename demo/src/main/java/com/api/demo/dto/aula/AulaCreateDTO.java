@@ -14,6 +14,15 @@ public class AulaCreateDTO {
     private Integer duracao;
     private String status;
     private Double valorTotal;
+    private String descricao;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
     public LocalDate getDataHora() {
         return dataHora;

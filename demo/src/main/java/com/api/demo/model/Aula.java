@@ -23,6 +23,15 @@ public class Aula {
     private Integer duracao;
     private String status;
     private Double valorTotal;
+    private String descricao;
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
     public Aluno getAluno() {
         return aluno;
