@@ -11,16 +11,16 @@ public class AulaResponseDTO {
     private Long idAluno;
     private Long idInstrutor;
     private LocalDate dataHora;
-    private LocalTime duracao;
+    private Integer duracao;
     private String status;
     private Double valorTotal;
 
 
-    public LocalTime getDuracao() {
+    public Integer getDuracao() {
         return duracao;
     }
 
-    public void setDuracao(LocalTime duracao) {
+    public void setDuracao(Integer duracao) {
         this.duracao = duracao;
     }
 
