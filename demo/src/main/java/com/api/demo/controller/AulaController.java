@@ -22,7 +22,7 @@ public class AulaController {
     }
 
     //id do instrutor
-    @GetMapping("/status/instrutores/{id}")
+    @PostMapping("/status/instrutores/{id}")
     public ResponseEntity<List<AulaResponseDTO>> findByInstrutorIdAndStatus(
             @RequestBody AulaCreateDTO dto,
             @PathVariable Long id
