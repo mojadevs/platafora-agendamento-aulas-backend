@@ -37,9 +37,7 @@ public class WebHookController {
             HttpServletRequest request,
             @RequestHeader("Stripe-Signature") String sigHeader) throws IOException {
 
-        String payload = request.getReader()
-                .lines()
-                .reduce("", (acc, line) -> acc + line);
+        String payload = new String(request.getInputStream().readAllBytes());
 
         Event event;
 

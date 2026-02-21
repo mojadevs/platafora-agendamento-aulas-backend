@@ -11,8 +11,6 @@ public class Instrutor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_instrutor;
     private String nome;
-    private String email;
-    private String senha;
     private String telefone;
     private String municipio;
     private String estado;
@@ -21,6 +19,18 @@ public class Instrutor {
     private Boolean ativo;
     @Column(name = "account_id")
     private String accountId;
+
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
 
     public String getMunicipio() {
         return municipio;
@@ -54,14 +64,6 @@ public class Instrutor {
         this.ativo = ativo;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Long getId() {
         return id_instrutor;
     }
@@ -92,14 +94,6 @@ public class Instrutor {
 
     public void setPrecoHora(Double precoHora) {
         this.precoHora = precoHora;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getTelefone() {
