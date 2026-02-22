@@ -1,16 +1,51 @@
 package com.api.demo.dto.aluno;
 
+import com.api.demo.model.Usuario;
+
 import java.time.LocalDate;
 
 public class AlunoResponseDTO {
     private Long id;
     private String nome;
-    private String email;
     private String telefone;
-    private Boolean ativo;
     private String municipio;
     private String estado;
+    private Long idUsuario;
     private String token;
+    private String email;
+    private String senha;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
 
     public String getEstado() {
         return estado;
@@ -26,14 +61,6 @@ public class AlunoResponseDTO {
 
     public void setMunicipio(String municipio) {
         this.municipio = municipio;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String getTelefone() {
@@ -58,22 +85,6 @@ public class AlunoResponseDTO {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
     }
 }
 

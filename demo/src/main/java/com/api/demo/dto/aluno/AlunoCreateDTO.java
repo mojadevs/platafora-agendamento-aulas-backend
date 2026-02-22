@@ -1,21 +1,14 @@
 package com.api.demo.dto.aluno;
 
+import com.api.demo.model.Usuario;
+
 import java.time.LocalDate;
 
 public class AlunoCreateDTO {
     private String nome;
     private String telefone;
-    private String senha;
-    private Boolean ativo;
     private String email;
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
+    private String senha;
 
     public String getEmail() {
         return email;
@@ -25,20 +18,20 @@ public class AlunoCreateDTO {
         this.email = email;
     }
 
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getTelefone() {

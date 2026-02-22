@@ -6,13 +6,31 @@ public class InstrutorResponseDTO {
     private Long id;
     private String nome;
     private String email;
+    private String senha;
     private String telefone;
     private Double precoHora;
     private String municipio;
     private String estado;
     private Boolean ativo;
+    private Long idUsuario;
     private String token;
     private String accountId;
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
 
     public String getAccountId() {
         return accountId;

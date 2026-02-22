@@ -1,9 +1,11 @@
 package com.api.demo.dto.login;
 
+import com.api.demo.enums.Role;
+
 public class LoginResponseDTO {
     private String token;
     private String nome;
-    private String role;
+    private Role role;
     private Long id;
 
     public Long getId() {
@@ -22,11 +24,11 @@ public class LoginResponseDTO {
         this.nome = nome;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

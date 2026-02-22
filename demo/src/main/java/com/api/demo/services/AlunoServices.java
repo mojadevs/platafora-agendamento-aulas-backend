@@ -3,10 +3,14 @@ package com.api.demo.services;
 import com.api.demo.dto.aluno.AlunoCreateDTO;
 import com.api.demo.dto.aluno.AlunoResponseDTO;
 import com.api.demo.dto.aluno.AlunoUpdateDTO;
+import com.api.demo.dto.usuario.UsuarioDTO;
+import com.api.demo.enums.Role;
 import com.api.demo.jwt.JwtServices;
 import com.api.demo.mapper.AlunoMapper;
 import com.api.demo.model.Aluno;
+import com.api.demo.model.Usuario;
 import com.api.demo.repository.AlunoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,12 +24,14 @@ public class AlunoServices {
     private final AlunoMapper alunoMapper;
     private final PasswordEncoder passwordEncoder;
     private final JwtServices jwtServices;
+    private final UsuarioServices usuarioServices;
 
-    public AlunoServices(JwtServices jwtServices, AlunoRepository alunoRepository, AlunoMapper alunoMapper, PasswordEncoder passwordEncoder){
+    public AlunoServices(UsuarioServices usuarioServices,JwtServices jwtServices, AlunoRepository alunoRepository, AlunoMapper alunoMapper, PasswordEncoder passwordEncoder){
         this.alunoRepository = alunoRepository;
         this.alunoMapper = alunoMapper;
         this.passwordEncoder = passwordEncoder;
         this.jwtServices = jwtServices;
+        this.usuarioServices = usuarioServices;
     }
 
     public List<AlunoResponseDTO> findAll(){
@@ -59,13 +65,27 @@ public class AlunoServices {
         alunoRepository.delete(aluno);
     }
 
+    @Transactional
     public AlunoResponseDTO save(AlunoCreateDTO dto){
-        Aluno aluno = alunoMapper.toEntity(dto);
-        aluno.setSenha(passwordEncoder.encode(dto.getSenha()));
-        AlunoResponseDTO alunoResponseDTO = alunoMapper.toDto(alunoRepository.save(aluno));
-        String token = jwtServices.generateToken(aluno.getEmail());
-        alunoResponseDTO.setToken(token);
+        Role role = Role.ALUNO;
+        String email = dto.getEmail();
+        String senha = dto.getSenha();
 
+        Usuario usuario = usuarioServices.save(email, role, senha);
+        Aluno aluno = alunoMapper.toEntity(dto);
+        aluno.setUsuario(usuario);
+        AlunoResponseDTO alunoResponseDTO = alunoMapper.toDto(alunoRepository.save(aluno));
+        String token = jwtServices.generateToken(email);
+        alunoResponseDTO.setToken(token);
+        alunoResponseDTO.setIdUsuario(usuario.getId());
+        alunoResponseDTO.setEmail(email);
+
+        return alunoResponseDTO;
+    }
+
+    public AlunoResponseDTO findByUsuario(Usuario usuario){
+        Aluno aluno = alunoRepository.findByUsuario(usuario).orElseThrow(() -> new RuntimeException("Aluno não encontrado"));
+        AlunoResponseDTO alunoResponseDTO = alunoMapper.toDto(aluno);
         return alunoResponseDTO;
     }
 
