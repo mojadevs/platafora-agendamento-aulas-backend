@@ -1,6 +1,6 @@
 package com.api.demo.model;
 
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 import jakarta.persistence.*;
 
 @Entity
@@ -21,6 +21,9 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.role = role;
+    }
+
+    public Usuario() {
     }
 
     public String getEmail() {

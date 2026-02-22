@@ -1,6 +1,6 @@
 package com.api.demo.dto.usuario;
 
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 
 public class UsuarioDTO {
     private Role role;
