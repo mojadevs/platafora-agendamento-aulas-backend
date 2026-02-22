@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class DocumentoInstrutorServices {
@@ -28,9 +30,22 @@ public class DocumentoInstrutorServices {
     }
 
     public DocumentoInstrutor uploadDocumento(MultipartFile file, String pasta, Long idInstrutor) throws IOException {
-        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap(
-                "folder", pasta
-        ));
+
+        String nomeOriginal = file.getOriginalFilename();
+        String nomeSemExtensao = nomeOriginal.substring(0, nomeOriginal.lastIndexOf("."));
+        String extensao = nomeOriginal.substring(nomeOriginal.lastIndexOf(".") + 1);
+
+        String nomeUnico = nomeSemExtensao + "_" + UUID.randomUUID();
+
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", pasta,
+                        "resource_type", "raw",
+                        "public_id", pasta + "/" + nomeUnico,
+                        "format", extensao
+                )
+        );
 
         TipoArquivo tipoArquivo = fromContentType(file.getContentType());
         String publicId = uploadResult.get("public_id").toString();
@@ -60,12 +75,18 @@ public class DocumentoInstrutorServices {
         return instrutor;
     }
 
-    private TipoArquivo fromContentType(String contentType){
-        if(contentType == null){
+    public List<DocumentoInstrutor> findByInstrutor(Long idInstrutor){
+        List<DocumentoInstrutor> documentoInstrutorList = documentoInstrutorRepository.findByInstrutorId(idInstrutor);
+
+        return documentoInstrutorList;
+    }
+
+    public TipoArquivo fromContentType(String contentType) {
+        if (contentType == null) {
             throw new RuntimeException("Erro : Tipo de arquivo inválido");
         }
 
-        switch (contentType){
+        switch (contentType) {
             case "application/pdf":
                 return TipoArquivo.PDF;
             case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":

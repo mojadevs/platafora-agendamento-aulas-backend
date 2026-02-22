@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("/documento-instrutor")
+@RequestMapping("/documentos-instrutores")
 public class DocumentoInstrutorController {
     private final DocumentoInstrutorServices documentoInstrutorServices;
 

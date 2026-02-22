@@ -32,6 +32,7 @@ public class DocumentoInstrutor {
     @Column(name = "public_id")
     private String publicId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "tipoArquivo")
     private TipoArquivo tipoArquivo;
 

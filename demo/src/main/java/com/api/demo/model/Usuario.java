@@ -23,6 +23,9 @@ public class Usuario {
         this.role = role;
     }
 
+    public Usuario() {
+    }
+
     public String getEmail() {
         return email;
     }
