@@ -1,6 +1,5 @@
 package com.api.demo.services;
-import com.api.demo.dto.usuario.UsuarioDTO;
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 import com.api.demo.mapper.UsuarioMapper;
 import com.api.demo.model.Usuario;
 import com.api.demo.repository.UsuarioRepository;

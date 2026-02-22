@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/alunos")
 public class AlunoController {
-
     private final AlunoServices alunoServices;
 
     public AlunoController(AlunoServices alunoServices){

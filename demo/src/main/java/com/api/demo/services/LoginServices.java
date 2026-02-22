@@ -3,19 +3,11 @@ import com.api.demo.dto.aluno.AlunoResponseDTO;
 import com.api.demo.dto.instrutor.InstrutorResponseDTO;
 import com.api.demo.dto.login.LoginDTO;
 import com.api.demo.dto.login.LoginResponseDTO;
-import com.api.demo.dto.usuario.UsuarioDTO;
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 import com.api.demo.jwt.JwtServices;
-import com.api.demo.model.Aluno;
-import com.api.demo.model.Instrutor;
 import com.api.demo.model.Usuario;
-import com.api.demo.repository.AlunoRepository;
-import com.api.demo.repository.InstrutorRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class LoginServices {

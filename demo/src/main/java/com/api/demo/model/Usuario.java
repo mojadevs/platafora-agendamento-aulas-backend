@@ -1,6 +1,6 @@
 package com.api.demo.model;
 
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 import jakarta.persistence.*;
 
 @Entity

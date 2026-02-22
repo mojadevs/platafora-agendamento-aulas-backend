@@ -1,6 +1,6 @@
 package com.api.demo.dto.login;
 
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 
 public class LoginResponseDTO {
     private String token;

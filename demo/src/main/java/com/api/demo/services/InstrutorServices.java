@@ -1,12 +1,10 @@
 package com.api.demo.services;
-import com.api.demo.dto.aluno.AlunoResponseDTO;
 import com.api.demo.dto.instrutor.InstrutorCreateDTO;
 import com.api.demo.dto.instrutor.InstrutorResponseDTO;
 import com.api.demo.dto.instrutor.InstrutorUpdateDTO;
-import com.api.demo.enums.Role;
+import com.api.demo.enums.usuario.Role;
 import com.api.demo.jwt.JwtServices;
 import com.api.demo.mapper.InstrutorMapper;
-import com.api.demo.model.Aluno;
 import com.api.demo.model.Instrutor;
 import com.api.demo.model.Usuario;
 import com.api.demo.repository.InstrutorRepository;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class InstrutorServices {
