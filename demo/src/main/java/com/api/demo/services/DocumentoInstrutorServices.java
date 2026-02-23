@@ -42,7 +42,7 @@ public class DocumentoInstrutorServices {
                 ObjectUtils.asMap(
                         "folder", pasta,
                         "resource_type", "raw",
-                        "public_id", pasta + "/" + nomeUnico,
+                        "public_id", nomeUnico,
                         "format", extensao
                 )
         );
