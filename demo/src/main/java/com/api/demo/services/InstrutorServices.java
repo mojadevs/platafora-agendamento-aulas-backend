@@ -69,7 +69,7 @@ public class InstrutorServices {
 
     @Transactional
     public InstrutorResponseDTO save(InstrutorCreateDTO dto){
-        Role role = Role.INSTRUTOR;
+        String role = Role.ROLE_INSTRUTOR.name();
         String email = dto.getEmail();
         String senha = dto.getSenha();
 
@@ -78,7 +78,7 @@ public class InstrutorServices {
         Instrutor instrutor = instrutorMapper.toEntity(dto);
         instrutor.setUsuario(usuario);
         InstrutorResponseDTO instrutorResponseDTO = instrutorMapper.toDto(instrutorRepository.save(instrutor));
-        String token = jwtServices.generateToken(email);
+        String token = jwtServices.generateToken(email, Role.ROLE_INSTRUTOR.name());
         instrutorResponseDTO.setToken(token);
         instrutorResponseDTO.setIdUsuario(usuario.getId());
         instrutorResponseDTO.setEmail(email);

@@ -1,10 +1,12 @@
 package com.api.demo.services;
+import com.api.demo.dto.admin.AdminResponseDTO;
 import com.api.demo.dto.aluno.AlunoResponseDTO;
 import com.api.demo.dto.instrutor.InstrutorResponseDTO;
 import com.api.demo.dto.login.LoginDTO;
 import com.api.demo.dto.login.LoginResponseDTO;
 import com.api.demo.enums.usuario.Role;
 import com.api.demo.jwt.JwtServices;
+import com.api.demo.model.Admin;
 import com.api.demo.model.Usuario;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,14 +17,16 @@ public class LoginServices {
     private final JwtServices jwtServices;
     private final UsuarioServices usuarioServices;
     private final AlunoServices alunoServices;
+    private final AdminServices adminServices;
     private final InstrutorServices instrutorServices;
 
-    public LoginServices(AlunoServices alunoServices, InstrutorServices instrutorServices, UsuarioServices usuarioServices, PasswordEncoder passwordEncoder, JwtServices jwtServices){
+    public LoginServices(AdminServices adminServices, AlunoServices alunoServices, InstrutorServices instrutorServices, UsuarioServices usuarioServices, PasswordEncoder passwordEncoder, JwtServices jwtServices){
         this.passwordEncoder = passwordEncoder;
         this.jwtServices = jwtServices;
         this.usuarioServices = usuarioServices;
         this.instrutorServices = instrutorServices;
         this.alunoServices = alunoServices;
+        this.adminServices = adminServices;
     }
 
     public LoginResponseDTO login(LoginDTO dto){
@@ -33,19 +37,18 @@ public class LoginServices {
             throw new RuntimeException("Credenciais inválidas");
         }
 
-        String token = jwtServices.generateToken(usuario.getEmail());
+        String token = jwtServices.generateToken(usuario.getEmail(), usuario.getRole());
 
         LoginResponseDTO response = new LoginResponseDTO();
         response.setToken(token);
         response.setRole(usuario.getRole());
 
-        if (usuario.getRole() == Role.ALUNO) {
+        if (usuario.getRole() == Role.ROLE_ALUNO.name()) {
             AlunoResponseDTO alunoResponseDTO = alunoServices.findByUsuario(usuario);
             response.setId(alunoResponseDTO.getId());
             response.setNome(alunoResponseDTO.getNome());
 
-        } else if (usuario.getRole() == Role.INSTRUTOR) {
-
+        } else if (usuario.getRole() == Role.ROLE_INSTRUTOR.name()) {
             InstrutorResponseDTO instrutorResponseDTO = instrutorServices.findByUsuario(usuario);
 
             if (!instrutorResponseDTO.getAtivo()) {
@@ -54,8 +57,14 @@ public class LoginServices {
 
             response.setId(instrutorResponseDTO.getId());
             response.setNome(instrutorResponseDTO.getNome());
+        }else if (usuario.getRole() == Role.ROLE_ADMIN.name()){
+            AdminResponseDTO adminResponseDTO = adminServices.findByUsuario(usuario);
+
+            response.setId(adminResponseDTO.getId());
+            response.setNome(adminResponseDTO.getNome());
         }
 
         return response;
     }
+
 }

@@ -1,9 +1,7 @@
-package com.api.demo.dto.usuario;
+package com.api.demo.dto.admin;
 
-import com.api.demo.enums.usuario.Role;
-
-public class UsuarioDTO {
-    private String role;
+public class AdminCreateDTO {
+    private String nome;
     private String senha;
     private String email;
 
@@ -15,19 +13,19 @@ public class UsuarioDTO {
         this.email = email;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
     public String getSenha() {
         return senha;
     }
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 }

@@ -36,7 +36,7 @@ public class UsuarioServices {
     }
 
 
-    public Usuario save(String email, Role role, String senha){
+    public Usuario save(String email, String role, String senha){
         String senha_criptografada = passwordEncoder.encode(senha);
         Usuario usuario = new Usuario(senha_criptografada, role, email);
 

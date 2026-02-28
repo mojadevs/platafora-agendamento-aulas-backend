@@ -9,8 +9,10 @@ public class Admin {
     @Column(name = "id_admin")
     private Long idAdmin;
 
-    @Column(name = "id_usuario")
-    private Long idUsuario;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")
+    private Usuario usuario;
+
 
     private String nome;
 
@@ -22,12 +24,13 @@ public class Admin {
         this.idAdmin = idAdmin;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public String getNome() {
