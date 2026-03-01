@@ -1,18 +1,26 @@
 package com.api.demo.dto.admin;
 
 public class AdminResponseDTO {
-    private Long id;
+    private Long idAdmin;
     private String nome;
-    private String senha;
     private String email;
+    private String token;
     private Long idUsuario;
 
-    public Long getId() {
-        return id;
+    public String getToken() {
+        return token;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Long getIdAdmin() {
+        return idAdmin;
+    }
+
+    public void setIdAdmin(Long idAdmin) {
+        this.idAdmin = idAdmin;
     }
 
     public Long getIdUsuario() {
@@ -29,14 +37,6 @@ public class AdminResponseDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getNome() {

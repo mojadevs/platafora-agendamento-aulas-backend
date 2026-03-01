@@ -30,25 +30,24 @@ public class LoginServices {
     }
 
     public LoginResponseDTO login(LoginDTO dto){
-
         Usuario usuario = usuarioServices.findByEmail(dto.getEmail());
 
         if (!passwordEncoder.matches(dto.getSenha(), usuario.getSenha())) {
             throw new RuntimeException("Credenciais inválidas");
         }
 
-        String token = jwtServices.generateToken(usuario.getEmail(), usuario.getRole());
+        String token = jwtServices.generateToken(usuario.getEmail(), usuario.getRole().name());
 
         LoginResponseDTO response = new LoginResponseDTO();
         response.setToken(token);
-        response.setRole(usuario.getRole());
+        response.setRole(usuario.getRole().name());
 
-        if (usuario.getRole() == Role.ROLE_ALUNO.name()) {
+        if (usuario.getRole() == Role.ROLE_ALUNO) {
             AlunoResponseDTO alunoResponseDTO = alunoServices.findByUsuario(usuario);
             response.setId(alunoResponseDTO.getId());
             response.setNome(alunoResponseDTO.getNome());
 
-        } else if (usuario.getRole() == Role.ROLE_INSTRUTOR.name()) {
+        } else if (usuario.getRole() == Role.ROLE_INSTRUTOR) {
             InstrutorResponseDTO instrutorResponseDTO = instrutorServices.findByUsuario(usuario);
 
             if (!instrutorResponseDTO.getAtivo()) {
@@ -57,14 +56,13 @@ public class LoginServices {
 
             response.setId(instrutorResponseDTO.getId());
             response.setNome(instrutorResponseDTO.getNome());
-        }else if (usuario.getRole() == Role.ROLE_ADMIN.name()){
+        }else if (usuario.getRole() == Role.ROLE_ADMIN){
             AdminResponseDTO adminResponseDTO = adminServices.findByUsuario(usuario);
 
-            response.setId(adminResponseDTO.getId());
+            response.setId(adminResponseDTO.getIdAdmin());
             response.setNome(adminResponseDTO.getNome());
         }
 
         return response;
     }
-
 }

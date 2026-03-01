@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_admin")
+    @Column(name = "id_admin") // mantém o nome da coluna no banco
     private Long idAdmin;
 
     @ManyToOne
@@ -23,7 +23,6 @@ public class Admin {
     public void setIdAdmin(Long idAdmin) {
         this.idAdmin = idAdmin;
     }
-
 
     public Usuario getUsuario() {
         return usuario;

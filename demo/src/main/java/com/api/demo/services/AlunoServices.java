@@ -66,7 +66,7 @@ public class AlunoServices {
 
     @Transactional
     public AlunoResponseDTO save(AlunoCreateDTO dto){
-        String role = Role.ROLE_ALUNO.name();
+        Role role = Role.ROLE_ALUNO;
         String email = dto.getEmail();
         String senha = dto.getSenha();
 

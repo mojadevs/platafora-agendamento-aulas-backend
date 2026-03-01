@@ -13,10 +13,10 @@ public class Usuario {
     private String email;
     private String senha;
 
-    @Column(nullable = false)
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
-    public Usuario(String senha, String role, String email) {
+    public Usuario(String senha, Role role, String email) {
         this.email = email;
         this.senha = senha;
         this.role = role;
@@ -41,11 +41,11 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 

@@ -69,7 +69,7 @@ public class InstrutorServices {
 
     @Transactional
     public InstrutorResponseDTO save(InstrutorCreateDTO dto){
-        String role = Role.ROLE_INSTRUTOR.name();
+        Role role = Role.ROLE_INSTRUTOR;
         String email = dto.getEmail();
         String senha = dto.getSenha();
 
