@@ -20,7 +20,7 @@ public class DocumentoInstrutorController {
     }
 
     //id do instrutor
-    @PostMapping("/upload/{id}")
+    @PostMapping("admin/upload/{id}")
     public ResponseEntity<DocumentoInstrutor> uploadDocumento(
             @PathVariable Long id,
             @RequestParam("file") MultipartFile file
@@ -34,7 +34,7 @@ public class DocumentoInstrutorController {
     }
 
     //id do instrutor
-    @GetMapping("/instrutores/{id}")
+    @GetMapping("admin/instrutores/{id}")
     public ResponseEntity<List<DocumentoInstrutor>> findByInstrutor(
             @PathVariable Long id
     ) {

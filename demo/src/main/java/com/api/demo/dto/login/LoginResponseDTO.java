@@ -5,7 +5,7 @@ import com.api.demo.enums.usuario.Role;
 public class LoginResponseDTO {
     private String token;
     private String nome;
-    private Role role;
+    private String role;
     private Long id;
 
     public Long getId() {
@@ -24,11 +24,11 @@ public class LoginResponseDTO {
         this.nome = nome;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

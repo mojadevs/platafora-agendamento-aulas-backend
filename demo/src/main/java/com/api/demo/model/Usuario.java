@@ -14,7 +14,6 @@ public class Usuario {
     private String senha;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private Role role;
 
     public Usuario(String senha, Role role, String email) {

@@ -66,7 +66,7 @@ public class AlunoServices {
 
     @Transactional
     public AlunoResponseDTO save(AlunoCreateDTO dto){
-        Role role = Role.ALUNO;
+        Role role = Role.ROLE_ALUNO;
         String email = dto.getEmail();
         String senha = dto.getSenha();
 
@@ -74,7 +74,7 @@ public class AlunoServices {
         Aluno aluno = alunoMapper.toEntity(dto);
         aluno.setUsuario(usuario);
         AlunoResponseDTO alunoResponseDTO = alunoMapper.toDto(alunoRepository.save(aluno));
-        String token = jwtServices.generateToken(email);
+        String token = jwtServices.generateToken(email, Role.ROLE_ALUNO.name());
         alunoResponseDTO.setToken(token);
         alunoResponseDTO.setIdUsuario(usuario.getId());
         alunoResponseDTO.setEmail(email);

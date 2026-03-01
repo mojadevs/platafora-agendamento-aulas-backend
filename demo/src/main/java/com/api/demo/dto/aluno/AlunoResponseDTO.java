@@ -13,7 +13,6 @@ public class AlunoResponseDTO {
     private Long idUsuario;
     private String token;
     private String email;
-    private String senha;
 
     public String getEmail() {
         return email;
@@ -21,14 +20,6 @@ public class AlunoResponseDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getToken() {

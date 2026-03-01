@@ -6,7 +6,6 @@ public class InstrutorResponseDTO {
     private Long id;
     private String nome;
     private String email;
-    private String senha;
     private String telefone;
     private Double precoHora;
     private String municipio;
@@ -22,14 +21,6 @@ public class InstrutorResponseDTO {
 
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
     }
 
     public String getAccountId() {
